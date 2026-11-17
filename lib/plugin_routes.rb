@@ -112,8 +112,8 @@ class PluginRoutes
       gem_settings = File.join($camaleon_engine_dir, 'config', 'system.json')
       app_settings = Rails.root.join('config', 'system.json')
 
-      settings = settings.merge(JSON.parse(File.read(gem_settings))) if File.exist?(gem_settings)
-      settings = settings.merge(JSON.parse(File.read(app_settings))) if File.exist?(app_settings)
+      settings = settings.merge(JSON.parse(File.read(gem_settings), allow_comments: true)) if File.exist?(gem_settings)
+      settings = settings.merge(JSON.parse(File.read(app_settings), allow_comments: true)) if File.exist?(app_settings)
 
       # custom settings
       settings['key'] = 'system'
@@ -352,7 +352,7 @@ class PluginRoutes
       config = File.join(path, 'config', 'config.json')
       next if entries.include?(entry) || !File.directory?(path) || !File.exist?(config)
 
-      p = JSON.parse(File.read(config))
+      p = JSON.parse(File.read(config), allow_comments: true)
       p = begin
         p.with_indifferent_access
       rescue StandardError
@@ -383,7 +383,7 @@ class PluginRoutes
       config = File.join(path, 'config', 'config.json')
       next if entries.include?(entry) || !File.directory?(path) || !File.exist?(config)
 
-      p = JSON.parse(File.read(config))
+      p = JSON.parse(File.read(config), allow_comments: true)
       p = begin
         p.with_indifferent_access
       rescue StandardError
@@ -412,7 +412,7 @@ class PluginRoutes
       config = File.join(path, 'config', 'camaleon_plugin.json')
       next unless File.exist?(config)
 
-      p = JSON.parse(File.read(config))
+      p = JSON.parse(File.read(config), allow_comments: true)
       p = begin
         p.with_indifferent_access
       rescue StandardError
@@ -437,7 +437,7 @@ class PluginRoutes
       config = File.join(path, 'config', 'camaleon_theme.json')
       next unless File.exist?(config)
 
-      p = JSON.parse(File.read(config))
+      p = JSON.parse(File.read(config), allow_comments: true)
       p = begin
         p.with_indifferent_access
       rescue StandardError
